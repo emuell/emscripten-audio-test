@@ -1,12 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Emscripten Audio Test</title>
 </head>
+
 <body>
-    <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
-    <script async type="text/javascript" src="target/wasm32-unknown-emscripten/debug/emscripten-audio-test.js"></script>
+    <script type="text/javascript">
+        function on_wasm_loaded() {
+            Module["postRun"] = function () {
+                console.log("Initializing audio...");
+                Module._init_audio();
+            };
+        }
+    </script>
+    <script async type="text/javascript" onload="on_wasm_loaded()"
+        src="target/wasm32-unknown-emscripten/debug/emscripten-audio-test.js">
+        </script>
 </body>
+
 </html>
